@@ -26,6 +26,8 @@ class ProgramMemory {
   void printProgram() const { std::cout << program_; }
   void printLabels() const;
   void printInstructions() const;
+  void executeInstructions();
+  
  private:
   std::string program_;
   std::vector<PairLabelLine> labels_;

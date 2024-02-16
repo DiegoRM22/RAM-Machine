@@ -4,6 +4,18 @@
 #include "program-memory.h"
 #include "../instruction/read-instruction.h"
 #include "../instruction/load-instruction.h"
+#include "../instruction/store-instruction.h"
+#include "../instruction/div-instruction.h"
+#include "../instruction/mul-instruction.h"
+#include "../instruction/add-instruction.h"
+#include "../instruction/sub-instruction.h"
+#include "../instruction/jump-instruction.h"
+#include "../instruction/jzero-instruction.h"
+#include "../instruction/jgtz-instruction.h"
+#include "../instruction/halt-instruction.h"
+#include "../instruction/read-instruction.h"
+#include "../instruction/write-instruction.h"
+
 
 #define STORE = "STORE"
 
@@ -66,11 +78,33 @@ void ProgramMemory::checkTypeInstruction(const std::string& instruction) {
   // convertimos la instruccion a minusculas
   std::string instructionLower = instruction;
   if (instruction.find("store") != std::string::npos) {
-    ReadInstruction readInstruction(1, "inmediate");
-    instructions.push_back(std::make_shared<ReadInstruction>(readInstruction));
+    instructions.push_back(std::make_shared<ReadInstruction>(ReadInstruction(1, "inmediate")));
   } else if (instruction.find("load") != std::string::npos) {
-    LoadInstruction loadInstruction(1, "inmediate");
-    instructions.push_back(std::make_shared<LoadInstruction>(loadInstruction));
+    instructions.push_back(std::make_shared<LoadInstruction>(LoadInstruction(1, "inmediate")));
+  } else if (instruction.find("store") != std::string::npos) {
+    instructions.push_back(std::make_shared<StoreInstruction>(StoreInstruction(1, "inmediate")));
+  } else if (instruction.find("div") != std::string::npos) {
+    instructions.push_back(std::make_shared<DivInstruction>(DivInstruction(1, "inmediate")));
+  } else if (instruction.find("mul") != std::string::npos) {
+    instructions.push_back(std::make_shared<MulInstruction>(MulInstruction(1, "inmediate")));
+  } else if (instruction.find("add") != std::string::npos) {
+    instructions.push_back(std::make_shared<AddInstruction>(AddInstruction(1, "inmediate")));
+  } else if (instruction.find("sub") != std::string::npos) {
+    instructions.push_back(std::make_shared<SubInstruction>(SubInstruction(1, "inmediate")));
+  } else if (instruction.find("jump") != std::string::npos) {
+    instructions.push_back(std::make_shared<JumpInstruction>(JumpInstruction(1, "inmediate")));
+  } else if (instruction.find("jzero") != std::string::npos) {
+    instructions.push_back(std::make_shared<JzeroInstruction>(JzeroInstruction(1, "inmediate")));
+  } else if (instruction.find("halt") != std::string::npos) {
+    instructions.push_back(std::make_shared<HaltInstruction>(HaltInstruction()));
+  } else if (instruction.find("read") != std::string::npos) {
+    instructions.push_back(std::make_shared<ReadInstruction>(ReadInstruction(1, "inmediate")));
+  } else if (instruction.find("write") != std::string::npos) {
+    instructions.push_back(std::make_shared<ReadInstruction>(ReadInstruction(1, "inmediate")));
+  } else if (instruction.find("jgtz") != std::string::npos) {
+    instructions.push_back(std::make_shared<JgtzInstruction>(JgtzInstruction(1, "inmediate")));
+  } else {
+    std::cout << "Error: instruction not found" << std::endl;
   }
 }
 
@@ -80,5 +114,11 @@ std::shared_ptr<Instruction> ProgramMemory::accessInstruction(const int programC
   } else {
     std::cout << "Error: program counter out of bounds" << std::endl;
     return nullptr;
+  }
+}
+
+void ProgramMemory::executeInstructions() {
+  for (int i = 0; i < instructions.size(); i++) {
+    instructions[i]->execute();
   }
 }

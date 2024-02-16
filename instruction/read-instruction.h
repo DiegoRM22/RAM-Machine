@@ -1,4 +1,7 @@
 
+#ifndef READ_INSTRUCTION_H
+#define READ_INSTRUCTION_H
+
 #include "instruction.h"
 
 // Class for instruction read
@@ -11,3 +14,5 @@ class ReadInstruction : public Instruction {
   int operand_;
   std::string operandType_;
 };
+
+#endif
