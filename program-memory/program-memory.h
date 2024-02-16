@@ -20,8 +20,9 @@ class ProgramMemory {
   std::shared_ptr<Instruction> accessInstruction(const int programCounter);
 
   int getLabelLine(const std::string &label);
+  int getNumberOfInstructions() const { return instructions.size(); }
 
-  void checkTypeInstruction(const std::string& instruction);
+  void checkTypeInstruction(const std::string& instruction, const std::string& operandType);
 
   void printProgram() const { std::cout << program_; }
   void printLabels() const;

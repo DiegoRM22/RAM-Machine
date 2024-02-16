@@ -74,35 +74,34 @@ void ProgramMemory::printLabels() const {
   }
 }
 
-void ProgramMemory::checkTypeInstruction(const std::string& instruction) {
+void ProgramMemory::checkTypeInstruction(const std::string& instruction, const std::string& operandType) {
   // convertimos la instruccion a minusculas
-  std::string instructionLower = instruction;
   if (instruction.find("store") != std::string::npos) {
-    instructions.push_back(std::make_shared<ReadInstruction>(ReadInstruction(1, "inmediate")));
+    instructions.push_back(std::make_shared<ReadInstruction>(ReadInstruction(1, operandType)));
   } else if (instruction.find("load") != std::string::npos) {
-    instructions.push_back(std::make_shared<LoadInstruction>(LoadInstruction(1, "inmediate")));
+    instructions.push_back(std::make_shared<LoadInstruction>(LoadInstruction(1, operandType)));
   } else if (instruction.find("store") != std::string::npos) {
-    instructions.push_back(std::make_shared<StoreInstruction>(StoreInstruction(1, "inmediate")));
+    instructions.push_back(std::make_shared<StoreInstruction>(StoreInstruction(1, operandType)));
   } else if (instruction.find("div") != std::string::npos) {
-    instructions.push_back(std::make_shared<DivInstruction>(DivInstruction(1, "inmediate")));
+    instructions.push_back(std::make_shared<DivInstruction>(DivInstruction(1, operandType)));
   } else if (instruction.find("mul") != std::string::npos) {
-    instructions.push_back(std::make_shared<MulInstruction>(MulInstruction(1, "inmediate")));
+    instructions.push_back(std::make_shared<MulInstruction>(MulInstruction(1, operandType)));
   } else if (instruction.find("add") != std::string::npos) {
-    instructions.push_back(std::make_shared<AddInstruction>(AddInstruction(1, "inmediate")));
+    instructions.push_back(std::make_shared<AddInstruction>(AddInstruction(1, operandType)));
   } else if (instruction.find("sub") != std::string::npos) {
-    instructions.push_back(std::make_shared<SubInstruction>(SubInstruction(1, "inmediate")));
+    instructions.push_back(std::make_shared<SubInstruction>(SubInstruction(1, operandType)));
   } else if (instruction.find("jump") != std::string::npos) {
-    instructions.push_back(std::make_shared<JumpInstruction>(JumpInstruction(1, "inmediate")));
+    instructions.push_back(std::make_shared<JumpInstruction>(JumpInstruction(1, operandType)));
   } else if (instruction.find("jzero") != std::string::npos) {
-    instructions.push_back(std::make_shared<JzeroInstruction>(JzeroInstruction(1, "inmediate")));
+    instructions.push_back(std::make_shared<JzeroInstruction>(JzeroInstruction(1, operandType)));
   } else if (instruction.find("halt") != std::string::npos) {
     instructions.push_back(std::make_shared<HaltInstruction>(HaltInstruction()));
   } else if (instruction.find("read") != std::string::npos) {
-    instructions.push_back(std::make_shared<ReadInstruction>(ReadInstruction(1, "inmediate")));
+    instructions.push_back(std::make_shared<ReadInstruction>(ReadInstruction(1, operandType)));
   } else if (instruction.find("write") != std::string::npos) {
-    instructions.push_back(std::make_shared<ReadInstruction>(ReadInstruction(1, "inmediate")));
+    instructions.push_back(std::make_shared<ReadInstruction>(ReadInstruction(1, operandType)));
   } else if (instruction.find("jgtz") != std::string::npos) {
-    instructions.push_back(std::make_shared<JgtzInstruction>(JgtzInstruction(1, "inmediate")));
+    instructions.push_back(std::make_shared<JgtzInstruction>(JgtzInstruction(1, operandType)));
   } else {
     std::cout << "Error: instruction not found" << std::endl;
   }
