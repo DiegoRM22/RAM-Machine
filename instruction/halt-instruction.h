@@ -11,7 +11,10 @@ class HaltInstruction : public Instruction {
  public:
   HaltInstruction() = default;
   void execute() override { std::cout << "Halting" << std::endl; }
-  void execute(DataMemory& dataMemory, int& programCounter, OutputUnit& outputUnit, InputUnit& inputUnit) override { std::cout << "Halting" << std::endl; }
+  void execute(DataMemory& dataMemory, int& programCounter, OutputUnit& outputUnit, InputUnit& inputUnit) override {
+    std::cout << "Halting" << std::endl;
+    throw std::runtime_error("Halting");
+  }
 
 };
 

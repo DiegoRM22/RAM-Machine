@@ -22,7 +22,6 @@ class RAMMachine {
   // Load the program from a file
   void loadProgram(const std::string &filename);
 
-  
 
  private:
   InputUnit inputUnit_;

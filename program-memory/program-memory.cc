@@ -2,7 +2,7 @@
 #include <algorithm>
 
 #include "program-memory.h"
-#include "../instruction/read-instruction.h"
+#include "../instruction/read-instruction/read-instruction.h"
 #include "../instruction/load-instruction/load-instruction.h"
 #include "../instruction/store-instruction/store-instruction.h"
 #include "../instruction/div-instruction/div-instruction.h"
@@ -13,8 +13,7 @@
 #include "../instruction/jzero-instruction.h"
 #include "../instruction/jgtz-instruction.h"
 #include "../instruction/halt-instruction.h"
-#include "../instruction/read-instruction.h"
-#include "../instruction/write-instruction.h"
+#include "../instruction/write-instruction/write-instruction.h"
 
 
 #define STORE = "STORE"
@@ -102,7 +101,7 @@ void ProgramMemory::checkTypeInstruction(const std::string& instruction, const i
   } else if (instruction.find("read") != std::string::npos) {
     instructions.push_back(std::make_shared<ReadInstruction>(ReadInstruction(instructionOPerand, operandType)));
   } else if (instruction.find("write") != std::string::npos) {
-    instructions.push_back(std::make_shared<ReadInstruction>(ReadInstruction(instructionOPerand, operandType)));
+    instructions.push_back(std::make_shared<WriteInstruction>(WriteInstruction(instructionOPerand, operandType)));
   } else if (instruction.find("jgtz") != std::string::npos) {
     instructions.push_back(std::make_shared<JgtzInstruction>(JgtzInstruction(labelLine)));
   } else {
