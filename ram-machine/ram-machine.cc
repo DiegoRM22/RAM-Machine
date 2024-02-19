@@ -21,7 +21,7 @@ void RAMMachine::runProgram(const std::string &filename, const int debuggOption)
     std::shared_ptr<Instruction> instruction = programMemory_.accessInstruction(arithmeticUnit_.programCounter_);
     arithmeticUnit_.executeInstruction(instruction, dataMemory_, arithmeticUnit_.programCounter_, outputUnit_, inputUnit_);
     if (debuggOption == 2) {
-      std::cout << "Instrucción ejecutada: " << programMemory_.getInstructionsString()[arithmeticUnit_.programCounter_] << std::endl;
+      std::cout << "Instrucción ejecutada: " << programMemory_.getInstructionsString()[arithmeticUnit_.programCounter_ - 1] << std::endl;
       std::cout << " Memoria de datos:" << std::endl;
       std::cout << "-------------------" << std::endl;
       dataMemory_.printRegisters();

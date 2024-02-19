@@ -27,7 +27,7 @@ class ProgramMemory {
   
 
   void checkTypeInstruction(const std::string& instruction, const int instructionOPerand, const std::string& operandType,
-                            const PairLabelLine& pairLabelLine = PairLabelLine());
+                            const PairLabelLine& pairLabelLine = PairLabelLine(), int position = 0);
 
   void printProgram() const { std::cout << program_; }
   void printLabels() const;

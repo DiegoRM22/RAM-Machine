@@ -16,9 +16,9 @@ void WriteInstruction::execute(DataMemory& dataMemory, int& programCounter, Outp
   if (operandType_ == "inmediate") {
     outputUnit.write(operand_);
   } else if (operandType_ == "direct") {
-    outputUnit.write(dataMemory.getRegister(operand_));
+    outputUnit.write(dataMemory.getRegister(operand_, position_));
   } else if (operandType_ == "indirect") {
-    outputUnit.write(dataMemory.getRegister(dataMemory.getRegister(operand_)));
+    outputUnit.write(dataMemory.getRegister(dataMemory.getRegister(operand_, position_)));
   }
   ++programCounter;
 }

@@ -14,9 +14,10 @@ void StoreInstruction::execute(DataMemory& dataMemory, int& programCounter, Outp
     outputUnit.writeToFile();
     exit(1);
   } else if (operandType_ == "direct") {
-    dataMemory.setRegister(operand_, dataMemory.getRegister(kAccumulatorDirection));
+    dataMemory.setRegister(operand_, dataMemory.getRegister(kAccumulatorDirection), position_);
   } else if (operandType_ == "indirect") {
-    dataMemory.setRegister(dataMemory.getRegister(operand_), dataMemory.getRegister(kAccumulatorDirection));
+    int address = dataMemory.getRegister(operand_, position_);
+    dataMemory.setRegister(address, dataMemory.getRegister(kAccumulatorDirection));
   }
   ++programCounter;
 }

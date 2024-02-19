@@ -1,0 +1,9 @@
+
+
+read 1[2]
+load 1[2]
+store 4[3]
+sub 1[2]
+write 4[3]
+write 1[2]
+halt

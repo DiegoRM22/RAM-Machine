@@ -50,8 +50,10 @@ ProgramMemory::ProgramMemory(std::string ramProgramFileName) {
     int operand = 0;
     std::string operandType = "direct";
     // Check if the line is a comment and if is not empty
+    std::cout << "Line: " << line << std::endl;
     if (line[0] != '#' && !line.empty()) {
       // Check if the line is a label -> there's a : in the line
+      std::cout << " entra aqui" << std::endl;
       std::string instruction;
       if (line.find(':') != std::string::npos) {
         instruction = line.substr(line.find(':') + 1, line.size());
@@ -74,6 +76,13 @@ ProgramMemory::ProgramMemory(std::string ramProgramFileName) {
       } // Aquí tenemos que trabajar con la instrucción directa o instrucciones de salto.
         instruction = instruction.substr(0, instruction.find(keyChar));
         auxInstruction.erase(0, instruction.size() + 1);
+        int position = 0;
+        // La posicion esta entre los corchetes
+        if (auxInstruction.find("[") != std::string::npos) {
+          position = std::stoi(auxInstruction.substr(auxInstruction.find("[") + 1, auxInstruction.find("]") - 1));
+          auxInstruction = auxInstruction.substr(0, auxInstruction.find("["));
+          std::cout << "Position: " << position << std::endl;
+        }
         //std::cout << "Operand string: " << auxInstruction << " de tamaño: " << auxInstruction.size() << std::endl;
         //printLabels();
         // convertir a minusculas la instruccion
@@ -86,7 +95,7 @@ ProgramMemory::ProgramMemory(std::string ramProgramFileName) {
         if (auxInstruction.length() > 0) {
           operand = std::stoi(auxInstruction);
         }
-      checkTypeInstruction(instruction, operand, operandType);
+      checkTypeInstruction(instruction, operand, operandType, PairLabelLine(), position);
       program_ += instruction + "\n";
       lineCounter++;
     }
@@ -117,24 +126,24 @@ void ProgramMemory::printLabels() const {
 }
 
 void ProgramMemory::checkTypeInstruction(const std::string& instruction, const int instructionOPerand, const std::string& operandType,
-                                         const PairLabelLine& labelLine) {
+                                         const PairLabelLine& labelLine, int position) {
   // convertimos la instruccion a minusculas
-  //std::cout << "Checking type of instruction: " << instruction << std::endl;
+  std::cout << "Checking type of instruction: " << instruction << std::endl;
   // Obtener el operando de la instruccion
   if (instruction.find("store") != std::string::npos) {
-    instructions.push_back(std::make_shared<StoreInstruction>(StoreInstruction(instructionOPerand, operandType)));
+    instructions.push_back(std::make_shared<StoreInstruction>(StoreInstruction(instructionOPerand, operandType, position)));
   } else if (instruction.find("load") != std::string::npos) {
-    instructions.push_back(std::make_shared<LoadInstruction>(LoadInstruction(instructionOPerand, operandType)));
+    instructions.push_back(std::make_shared<LoadInstruction>(LoadInstruction(instructionOPerand, operandType, position)));
   } else if (instruction.find("store") != std::string::npos) {
-    instructions.push_back(std::make_shared<StoreInstruction>(StoreInstruction(instructionOPerand, operandType)));
+    instructions.push_back(std::make_shared<StoreInstruction>(StoreInstruction(instructionOPerand, operandType, position)));
   } else if (instruction.find("div") != std::string::npos) {
-    instructions.push_back(std::make_shared<DivInstruction>(DivInstruction(instructionOPerand, operandType)));
+    instructions.push_back(std::make_shared<DivInstruction>(DivInstruction(instructionOPerand, operandType, position)));
   } else if (instruction.find("mul") != std::string::npos) {
-    instructions.push_back(std::make_shared<MulInstruction>(MulInstruction(instructionOPerand, operandType)));
+    instructions.push_back(std::make_shared<MulInstruction>(MulInstruction(instructionOPerand, operandType, position)));
   } else if (instruction.find("add") != std::string::npos) {
-    instructions.push_back(std::make_shared<AddInstruction>(AddInstruction(instructionOPerand, operandType)));
+    instructions.push_back(std::make_shared<AddInstruction>(AddInstruction(instructionOPerand, operandType, position)));
   } else if (instruction.find("sub") != std::string::npos) {
-    instructions.push_back(std::make_shared<SubInstruction>(SubInstruction(instructionOPerand, operandType)));
+    instructions.push_back(std::make_shared<SubInstruction>(SubInstruction(instructionOPerand, operandType, position)));
   } else if (instruction.find("jump") != std::string::npos) {
     instructions.push_back(std::make_shared<JumpInstruction>(JumpInstruction(labelLine)));
   } else if (instruction.find("jzero") != std::string::npos) {
@@ -142,9 +151,9 @@ void ProgramMemory::checkTypeInstruction(const std::string& instruction, const i
   } else if (instruction.find("halt") != std::string::npos) {
     instructions.push_back(std::make_shared<HaltInstruction>(HaltInstruction()));
   } else if (instruction.find("read") != std::string::npos) {
-    instructions.push_back(std::make_shared<ReadInstruction>(ReadInstruction(instructionOPerand, operandType)));
+    instructions.push_back(std::make_shared<ReadInstruction>(ReadInstruction(instructionOPerand, operandType, position)));
   } else if (instruction.find("write") != std::string::npos) {
-    instructions.push_back(std::make_shared<WriteInstruction>(WriteInstruction(instructionOPerand, operandType)));
+    instructions.push_back(std::make_shared<WriteInstruction>(WriteInstruction(instructionOPerand, operandType, position)));
   } else if (instruction.find("jgtz") != std::string::npos) {
     instructions.push_back(std::make_shared<JgtzInstruction>(JgtzInstruction(labelLine)));
   } else {

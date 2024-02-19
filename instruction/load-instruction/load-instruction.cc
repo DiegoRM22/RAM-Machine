@@ -7,11 +7,12 @@ void LoadInstruction::execute(DataMemory& dataMemory, int& programCounter, Outpu
   // Check the type of the operand.
   const int kAccumulatorDirection = 0;
   if (operandType_ == "inmediate") {
-    dataMemory.setRegister(kAccumulatorDirection, operand_);
+    dataMemory.setRegister(kAccumulatorDirection, operand_, position_);
   } else if (operandType_ == "direct") {
-    dataMemory.setRegister(kAccumulatorDirection, dataMemory.getRegister(operand_));
+    std::cout << "Loading from " << operand_ << "[" << position_ << "]" << " to " << kAccumulatorDirection << std::endl;
+    dataMemory.setRegister(kAccumulatorDirection, dataMemory.getRegister(operand_, position_));
   } else if (operandType_ == "indirect") {
-    dataMemory.setRegister(kAccumulatorDirection, dataMemory.getRegister(dataMemory.getRegister(operand_)));
+    dataMemory.setRegister(kAccumulatorDirection, dataMemory.getRegister(dataMemory.getRegister(operand_, position_)));
   }
   ++programCounter;
 }
