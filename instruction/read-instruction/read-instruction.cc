@@ -7,6 +7,9 @@ void ReadInstruction::execute(DataMemory& dataMemory, int& programCounter, Outpu
   // Check the type of the operand.
   if (operandType_ == "inmediate" || operand_ == 0) {
     // Error: operand_ is not a register, it is a value or is R0.
+    std::cout << "Error en la línea: " << programCounter << " Read instruction does not handle operations with R0 register." 
+              << std::endl;
+    outputUnit.writeToFile();
     exit(1);
   }
   else if (operandType_ == "direct") {

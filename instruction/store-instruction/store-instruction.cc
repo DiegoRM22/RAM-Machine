@@ -9,7 +9,9 @@ void StoreInstruction::execute(DataMemory& dataMemory, int& programCounter, Outp
   if (operandType_ == "inmediate") {
     // Error: STORE doesnt handle inmediate values, stop program execution
     // Falta volcar la cola de salida en un archivo.
-    std::cout << "Error: STORE doesnt handle inmediate values, stop program execution" << std::endl;
+    std::cout << "Error en la linea: " << programCounter << " STORE doesnt handle inmediate values, stop program execution"
+              << std::endl;
+    outputUnit.writeToFile();
     exit(1);
   } else if (operandType_ == "direct") {
     dataMemory.setRegister(operand_, dataMemory.getRegister(kAccumulatorDirection));

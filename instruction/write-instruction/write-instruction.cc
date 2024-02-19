@@ -8,7 +8,9 @@ void WriteInstruction::execute(DataMemory& dataMemory, int& programCounter, Outp
   const int kAccumulatorDirection = 0;
   if (operand_ == 0 && operandType_ != "inmediate") {
     // Error: operand_ is not a register, it is a value or is R0.
-    std::cout << "Error: Write instruction does not handle operations with R0 register." << std::endl;
+    std::cout << "Error en la línea: " << programCounter << " Write instruction does not handle operations with R0 register."
+              << std::endl;
+    outputUnit.writeToFile();
     exit(1);
   }
   if (operandType_ == "inmediate") {

@@ -55,8 +55,8 @@ RAMMachine::RAMMachine(std::string ramProgramFileName, std::string inputFileName
     std::cout << "Program counter: " << arithmeticUnit_.programCounter_ << std::endl;
     outputUnit_.printMemory();
     std::cout << "-------------------" << std::endl;
-    outputUnit_.writeToFile();
   }
+  outputUnit_.writeToFile();
 
   //arithmeticUnit_.executeInstructions(programMemory_, dataMemory_);
 }

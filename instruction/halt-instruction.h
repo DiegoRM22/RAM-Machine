@@ -13,6 +13,7 @@ class HaltInstruction : public Instruction {
   void execute() override { std::cout << "Halting" << std::endl; }
   void execute(DataMemory& dataMemory, int& programCounter, OutputUnit& outputUnit, InputUnit& inputUnit) override {
     std::cout << "Halting" << std::endl;
+    outputUnit.writeToFile();
     throw std::runtime_error("Halting");
   }
 
