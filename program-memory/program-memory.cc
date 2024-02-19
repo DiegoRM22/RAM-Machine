@@ -28,7 +28,7 @@ void ProgramMemory::findLabels(const std::string& program) {
     if (line[0] != '#' && !line.empty()) {
       // Revisar que la linea no sean solo espacios en blanco
       
-      std::cout << "Line: " << line << std::endl;
+      //std::cout << "Line: " << line << std::endl;
       if (line.find(':') != std::string::npos) {
         // Split the line in two parts: label and instruction
         std::string label = line.substr(0, line.find(':'));
@@ -46,6 +46,7 @@ ProgramMemory::ProgramMemory(std::string ramProgramFileName) {
   int lineCounter = 0;
   findLabels(ramProgramFileName);
   while (std::getline(ramProgramFile, line)) {
+    line.erase(line.begin(), std::find_if(line.begin(), line.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
     int operand = 0;
     std::string operandType = "direct";
     // Check if the line is a comment and if is not empty
@@ -118,7 +119,7 @@ void ProgramMemory::printLabels() const {
 void ProgramMemory::checkTypeInstruction(const std::string& instruction, const int instructionOPerand, const std::string& operandType,
                                          const PairLabelLine& labelLine) {
   // convertimos la instruccion a minusculas
-  std::cout << "Checking type of instruction: " << instruction << std::endl;
+  //std::cout << "Checking type of instruction: " << instruction << std::endl;
   // Obtener el operando de la instruccion
   if (instruction.find("store") != std::string::npos) {
     instructions.push_back(std::make_shared<StoreInstruction>(StoreInstruction(instructionOPerand, operandType)));

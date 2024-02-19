@@ -3,7 +3,7 @@
 #include "load-instruction.h"
 
 void LoadInstruction::execute(DataMemory& dataMemory, int& programCounter, OutputUnit& outputUnit, InputUnit& inputUnit) {
-  std::cout << "Loading " << operand_ << std::endl;
+  //std::cout << "Loading " << operand_ << std::endl;
   // Check the type of the operand.
   const int kAccumulatorDirection = 0;
   if (operandType_ == "inmediate") {

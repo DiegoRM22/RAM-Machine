@@ -3,7 +3,7 @@
 #include "div-instruction.h"
 
 void DivInstruction::execute(DataMemory& dataMemory, int& programCounter, OutputUnit& outputUnit, InputUnit& inputUnit) {
-  std::cout << "Dividing " << operand_ << std::endl;
+  //std::cout << "Dividing " << operand_ << std::endl;
   // Check the type of the operand.
   const int kAccumulatorDirection = 0;
   if (operandType_ == "inmediate") {

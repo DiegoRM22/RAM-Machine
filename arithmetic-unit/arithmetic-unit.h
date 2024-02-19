@@ -19,6 +19,7 @@ class ArithmeticUnit {
   
  private:
   int programCounter_;
+  int numberOfInstructions_ = 0;
 
 };
 

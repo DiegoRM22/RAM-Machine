@@ -32,9 +32,18 @@ int main(int argc, char *argv[]) {
   std::string ramProgramFile(argv[1]);
   std::string inputFile(argv[2]);
   std::string outputFile(argv[3]);
+  int debugOption = 0;
+  if (argc == 5) {
+    std::string debugOptionString(argv[4]);
+    if (debugOptionString == "-d") {
+      debugOption = 1;
+    } else if (debugOptionString == "-dd") {
+      debugOption = 2;
+    }
+  }
 
   RAMMachine ramMachine(ramProgramFile, inputFile, outputFile);
-
+  ramMachine.runProgram(argv[1], debugOption);
   // RAMMachine ramMachine(ramProgramFile, inputFile, outputFile);
   // ramMachine.loadProgram(argv[1]);
   // ramMachine.run();

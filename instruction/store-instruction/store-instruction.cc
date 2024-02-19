@@ -3,7 +3,7 @@
 #include "store-instruction.h"
 
 void StoreInstruction::execute(DataMemory& dataMemory, int& programCounter, OutputUnit& outputUnit, InputUnit& inputUnit) {
-  std::cout << "Storing... " << operand_ << std::endl;
+  //std::cout << "Storing... " << operand_ << std::endl;
   // Check the type of the operand.
   const int kAccumulatorDirection = 0;
   if (operandType_ == "inmediate") {

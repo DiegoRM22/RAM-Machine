@@ -33,6 +33,19 @@ class InputUnit {
     }
   }
 
+  void printMemory() {
+    for (int i = 0; i < inputMemory_.size(); i++) {
+      std::cout << inputMemory_[i] << " ";
+    }
+    std::cout << std::endl;
+    for (int i = 0; i < inputMemory_.size(); i++) {
+      if (i == head_ - 1) std::cout << " ^";
+      else std::cout << "  ";
+    }
+    std::cout << std::endl;
+    std::cout << "Cabeza: " << head_ << std::endl;
+  }
+
  private:
   std::vector<int> inputMemory_;
   int head_ = 0;

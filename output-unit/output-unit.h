@@ -23,6 +23,13 @@ class OutputUnit {
     for (int i = 0; i < outputMemory_.size(); i++) {
       std::cout << outputMemory_[i] << " ";
     }
+    std::cout << std::endl;
+    for (int i = 0; i < outputMemory_.size(); i++) {
+      if (i == head_ - 1) std::cout << " ^ ";
+      else std::cout << "  ";
+    }
+    std::cout << std::endl;
+    std::cout << "Cabeza: " << head_ << std::endl;
   }
 
   void writeToFile() {

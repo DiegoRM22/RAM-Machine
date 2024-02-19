@@ -20,7 +20,7 @@ class RAMMachine {
   // Constructor
   RAMMachine(std::string ramProgramFileName, std::string inputFileName, std::string outputFileName);
   // Load the program from a file
-  void loadProgram(const std::string &filename);
+  void runProgram(const std::string &filename, const int debuggOption = 0); 
 
 
  private:

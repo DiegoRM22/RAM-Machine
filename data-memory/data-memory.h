@@ -14,7 +14,7 @@ class DataMemory {
   void setRegister(int address, int value) {
     if (address >= dataMemory_.size()) {
       dataMemory_.resize(address + 1, 0);
-      std::cout << "Resizing data memory to " << address + 1 << std::endl;
+      //std::cout << "Resizing data memory to " << address + 1 << std::endl;
     }
     dataMemory_[address] = value; 
   }

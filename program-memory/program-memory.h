@@ -21,6 +21,7 @@ class ProgramMemory {
 
   int getLabelLine(const std::string &label);
   int getNumberOfInstructions() const { return instructions.size(); }
+  std::vector<std::string> getInstructionsString() const { return instructions_; }
 
   void findLabels(const std::string& program);
   
