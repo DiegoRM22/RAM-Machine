@@ -4,16 +4,21 @@
 #define JUMP_H
 
 #include "instruction.h"
+#include "../data-memory/data-memory.h"
 
 // Class for instruction jump
 class JumpInstruction : public Instruction {
  public:
   JumpInstruction() = default;
-  JumpInstruction(int operand, std::string operandType) : operand_(operand), operandType_(operandType) {}
-  void execute() override { std::cout << "Jumping to " << operand_ << std::endl; }
+  JumpInstruction(const PairLabelLine& label) : label_(label) {}
+  void execute() override { std::cout << "Jumping to " << label_.getLabel() << " is greater than zero" << std::endl; }
+  void execute(DataMemory& dataMemory, int& programCounter, OutputUnit& outputUnit, InputUnit& inputUnit) {
+    std::cout << "Jumping to " << label_.getLabel() << " because R0 value is greater than zero" << std::endl;
+    programCounter = label_.getLine();
+  }
+
  private:
-  int operand_;
-  std::string operandType_;
+  PairLabelLine label_;
 };
 
 #endif

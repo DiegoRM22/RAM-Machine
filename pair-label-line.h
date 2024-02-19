@@ -1,4 +1,6 @@
 
+#ifndef PAIR_LABEL_LINE_H
+#define PAIR_LABEL_LINE_H
 
 #include <iostream>
 
@@ -12,3 +14,5 @@ class PairLabelLine {
   std::string label;
   int line;
 };
+
+#endif

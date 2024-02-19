@@ -3,6 +3,8 @@
 #define OUTPUT_UNIT_H
 
 class OutputUnit {
+ public:
+  OutputUnit() = default;
 };
 
 #endif

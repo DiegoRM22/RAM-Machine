@@ -11,9 +11,12 @@ class ArithmeticUnit {
   void incrementProgramCounter() { programCounter_++; }
   void jump(int address) { programCounter_ = address; }
   int getProgramCounter() const { return programCounter_; }
-  void executeInstructions(ProgramMemory& programMemory);
-  void executeInstruction(std::shared_ptr<Instruction>& instruction);
+  void executeInstructions(ProgramMemory& programMemory, DataMemory& dataMemory);
+  void executeInstruction(std::shared_ptr<Instruction>& instruction, DataMemory& dataMemory,
+                          int& programCounter, OutputUnit& outputUnit, InputUnit& inputUnit);
 
+  friend class RAMMachine;
+  
  private:
   int programCounter_;
 
