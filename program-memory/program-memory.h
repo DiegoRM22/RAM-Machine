@@ -22,6 +22,9 @@ class ProgramMemory {
   int getLabelLine(const std::string &label);
   int getNumberOfInstructions() const { return instructions.size(); }
 
+  void findLabels(const std::string& program);
+  
+
   void checkTypeInstruction(const std::string& instruction, const int instructionOPerand, const std::string& operandType,
                             const PairLabelLine& pairLabelLine = PairLabelLine());
 
@@ -29,7 +32,8 @@ class ProgramMemory {
   void printLabels() const;
   void printInstructions() const;
   void executeInstructions();
-  
+
+  bool isALabel(const std::string& label) const;
  private:
   std::string program_;
   std::vector<PairLabelLine> labels_;

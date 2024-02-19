@@ -1,5 +1,6 @@
 
 #include <algorithm>
+#include <string>
 
 #include "program-memory.h"
 #include "../instruction/read-instruction/read-instruction.h"
@@ -18,36 +19,73 @@
 
 #define STORE = "STORE"
 
-ProgramMemory::ProgramMemory(std::string ramProgramFileName) {
+void ProgramMemory::findLabels(const std::string& program) {
   std::string line;
-  std::ifstream ramProgramFile(ramProgramFileName);
+  std::ifstream ramProgramFile(program);
   int lineCounter = 0;
   while (std::getline(ramProgramFile, line)) {
-    // Check if the line is a comment and if is not empty
     if (line[0] != '#' && !line.empty()) {
-      // Check if the line is a label -> there's a : in the line
       if (line.find(':') != std::string::npos) {
         // Split the line in two parts: label and instruction
         std::string label = line.substr(0, line.find(':'));
-        std::string instruction = line.substr(line.find(':') + 1, line.size());
         // Add the label and the line to the vector
         labels_.push_back(PairLabelLine(label, lineCounter));
-        // Eliminar los espacios en blanco del principio solo
-        instruction.erase(instruction.begin(), std::find_if(instruction.begin(), instruction.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
-        instructions_.push_back(instruction);
-        // Add the instruction to the program
-        program_ += instruction + "\n";
-      } else {
-        program_ += (ramProgramFile.peek() == ramProgramFile.eof()) ? line : line + "\n";
-        // Eliminar los espacios en blanco del principio solo
-        line.erase(line.begin(), std::find_if(line.begin(), line.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
-        instructions_.push_back(line);
       }
       lineCounter++;
     }
   }
-  
+}
 
+ProgramMemory::ProgramMemory(std::string ramProgramFileName) {
+  std::string line;
+  std::ifstream ramProgramFile(ramProgramFileName);
+  int lineCounter = 0;
+  findLabels(ramProgramFileName);
+  while (std::getline(ramProgramFile, line)) {
+    int operand = 0;
+    std::string operandType = "direct";
+    // Check if the line is a comment and if is not empty
+    if (line[0] != '#' && !line.empty()) {
+      // Check if the line is a label -> there's a : in the line
+      std::string instruction;
+      if (line.find(':') != std::string::npos) {
+        instruction = line.substr(line.find(':') + 1, line.size());
+      } else {
+        line.erase(line.begin(), std::find_if(line.begin(), line.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+        instruction = line;
+      }
+      instruction.erase(instruction.begin(), std::find_if(instruction.begin(), instruction.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+      instructions_.push_back(instruction);
+      std::string auxInstruction = instruction;
+      std::string keyChar = " ";
+      if (instruction.find("=") != std::string::npos) {
+        keyChar = "=";
+        std::cout << "Trabajando en la instruccion inmediata " << instruction << std::endl;
+        //operand = std::stoi(instruction.substr(instruction.find("=") + 1, instruction.size()));
+        operandType = "inmediate";
+        //instruction = instruction.substr(0, instruction.find("="));
+      } else if (instruction.find("*") != std::string::npos) {
+        keyChar = "*";
+        std::cout << "Trabajando en la instruccion indirecta " << instruction << std::endl;
+        operandType = "indirect";
+      } // Aquí tenemos que trabajar con la instrucción directa o instrucciones de salto.
+        instruction = instruction.substr(0, instruction.find(keyChar));
+        auxInstruction.erase(0, instruction.size() + 1);
+        std::cout << "Operand string: " << auxInstruction << " de tamaño: " << auxInstruction.size() << std::endl;
+        //printLabels();
+        if (instruction == "jump" || instruction == "jzero" || instruction == "jgtz") {
+          std::cout << "Es una etiqueta" << std::endl;
+          PairLabelLine pairLabelLine(auxInstruction, getLabelLine(auxInstruction));
+          //checkTypeInstruction(instruction, 0, "inmediate", pairLabelLine);
+          continue;
+        }
+        if (auxInstruction.length() > 0) {
+          operand = std::stoi(auxInstruction);
+        }
+      program_ += instruction + "\n";
+      lineCounter++;
+    }
+  }
 }
 
 int ProgramMemory::getLabelLine(const std::string &label) {
@@ -122,4 +160,13 @@ void ProgramMemory::executeInstructions() {
   for (int i = 0; i < instructions.size(); i++) {
     instructions[i]->execute();
   }
+}
+
+bool ProgramMemory::isALabel(const std::string& label) const {
+  for (int i = 0; i < labels_.size(); i++) {
+    if (labels_[i].getLabel() == label) {
+      return true;
+    }
+  }
+  return false;
 }

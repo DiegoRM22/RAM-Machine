@@ -19,20 +19,20 @@ RAMMachine::RAMMachine(std::string ramProgramFileName, std::string inputFileName
   // programMemory_.checkTypeInstruction("jump SALTA SIEMPRE", 0, "inmediate", pairLabelLine3);
   std::vector<int> inputUnit = {1, 2, 3, 4, 5, 1};
   inputUnit_.setMemory(inputUnit);
-  programMemory_.checkTypeInstruction("read 1", 1, "direct");
-  programMemory_.checkTypeInstruction("read 2", 2, "direct");
-  programMemory_.checkTypeInstruction("read 3", 3, "direct");
-  programMemory_.checkTypeInstruction("read 4", 4, "direct");
-  programMemory_.checkTypeInstruction("read 6", 6, "direct");
-  programMemory_.checkTypeInstruction("read 7", 7, "direct");
+  // programMemory_.checkTypeInstruction("read 1", 1, "direct");
+  // programMemory_.checkTypeInstruction("read 2", 2, "direct");
+  // programMemory_.checkTypeInstruction("read 3", 3, "direct");
+  // programMemory_.checkTypeInstruction("read 4", 4, "direct");
+  // programMemory_.checkTypeInstruction("read 6", 6, "direct");
+  // programMemory_.checkTypeInstruction("read 7", 7, "direct");
 
-  programMemory_.checkTypeInstruction("write 1", 1, "direct");
-  programMemory_.checkTypeInstruction("write 2", 2, "direct");
-  programMemory_.checkTypeInstruction("write 3", 3, "direct");
-  programMemory_.checkTypeInstruction("write 4", 4, "direct");
-  programMemory_.checkTypeInstruction("write 6", 6, "direct");
-  //programMemory_.checkTypeInstruction("halt", 7, "direct");
-  programMemory_.checkTypeInstruction("write 7", 7, "indirect");
+  // programMemory_.checkTypeInstruction("write 1", 1, "direct");
+  // programMemory_.checkTypeInstruction("write 2", 2, "direct");
+  // programMemory_.checkTypeInstruction("write 3", 3, "direct");
+  // programMemory_.checkTypeInstruction("write 4", 4, "direct");
+  // programMemory_.checkTypeInstruction("write 6", 6, "direct");
+  // //programMemory_.checkTypeInstruction("halt", 7, "direct");
+  // programMemory_.checkTypeInstruction("write 7", 7, "indirect");
 
   // programMemory_.checkTypeInstruction("jump 1", "inmediate");
   // programMemory_.checkTypeInstruction("jumpz 1", "inmediate");
@@ -45,7 +45,7 @@ RAMMachine::RAMMachine(std::string ramProgramFileName, std::string inputFileName
   // programMemory_.checkTypeInstruction("halt", "inmediate");
   // programMemory_.checkTypeInstruction("jgtz 1", "inmediate");
   //programMemory_.executeInstructions();
-  dataMemory_.printRegisters();
+  //dataMemory_.printRegisters();
   
   for (int i = 0; i < programMemory_.getNumberOfInstructions(); i++) {
     std::shared_ptr<Instruction> instruction = programMemory_.accessInstruction(i);
