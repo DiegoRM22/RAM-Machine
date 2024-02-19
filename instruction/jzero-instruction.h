@@ -17,7 +17,9 @@ class JzeroInstruction : public Instruction {
       std::cout << "Jumping to " << label_.getLabel() << " because R0 value is EQ to zero" << std::endl;
       programCounter = label_.getLine();
     } else {
-      std::cout << "Not jumping to " << label_.getLabel() << " because R0 value is not EQ to zero" << std::endl;}
+      std::cout << "Not jumping to " << label_.getLabel() << " because R0 value is not EQ to zero" << std::endl;
+      programCounter++;
+    }
   }
  private:
   PairLabelLine label_;

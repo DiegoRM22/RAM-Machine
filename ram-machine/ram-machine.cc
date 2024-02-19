@@ -6,9 +6,9 @@ RAMMachine::RAMMachine(std::string ramProgramFileName, std::string inputFileName
 
   ProgramMemory program(ramProgramFileName);
   programMemory_ = program;
-  programMemory_.printProgram();
+  // programMemory_.printProgram();
   programMemory_.printLabels();
-  programMemory_.printInstructions();
+  //programMemory_.printInstructions();
   //programMemory_.checkTypeInstruction("store =1", "inmediate");
   // programMemory_.checkTypeInstruction("load =", 3, "inmediate");
   // PairLabelLine pairLabelLine("lee", 5);
@@ -17,8 +17,9 @@ RAMMachine::RAMMachine(std::string ramProgramFileName, std::string inputFileName
   // programMemory_.checkTypeInstruction("jzero NO lee", 0, "inmediate", pairLabelLine2);
   // PairLabelLine pairLabelLine3("SALTA SIEMPRE", 20);
   // programMemory_.checkTypeInstruction("jump SALTA SIEMPRE", 0, "inmediate", pairLabelLine3);
-  std::vector<int> inputUnit = {1, 2, 3, 4, 5, 1};
-  inputUnit_.setMemory(inputUnit);
+  //std::vector<int> inputUnit = {1, 2, 3, 4, 0, 1};
+  inputUnit_.setMemory(inputFileName);
+  outputUnit_.setOutputFileName(outputFileName);
   // programMemory_.checkTypeInstruction("read 1", 1, "direct");
   // programMemory_.checkTypeInstruction("read 2", 2, "direct");
   // programMemory_.checkTypeInstruction("read 3", 3, "direct");
@@ -47,15 +48,15 @@ RAMMachine::RAMMachine(std::string ramProgramFileName, std::string inputFileName
   //programMemory_.executeInstructions();
   //dataMemory_.printRegisters();
   
-  for (int i = 0; i < programMemory_.getNumberOfInstructions(); i++) {
-    std::shared_ptr<Instruction> instruction = programMemory_.accessInstruction(i);
+  while (arithmeticUnit_.programCounter_ < programMemory_.getNumberOfInstructions()) {
+    std::shared_ptr<Instruction> instruction = programMemory_.accessInstruction(arithmeticUnit_.programCounter_);
     arithmeticUnit_.executeInstruction(instruction, dataMemory_, arithmeticUnit_.programCounter_, outputUnit_, inputUnit_);
     dataMemory_.printRegisters();
     std::cout << "Program counter: " << arithmeticUnit_.programCounter_ << std::endl;
     outputUnit_.printMemory();
-    
+    std::cout << "-------------------" << std::endl;
+    outputUnit_.writeToFile();
   }
 
   //arithmeticUnit_.executeInstructions(programMemory_, dataMemory_);
-
 }

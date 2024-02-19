@@ -24,7 +24,11 @@ void ProgramMemory::findLabels(const std::string& program) {
   std::ifstream ramProgramFile(program);
   int lineCounter = 0;
   while (std::getline(ramProgramFile, line)) {
+    line.erase(line.begin(), std::find_if(line.begin(), line.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
     if (line[0] != '#' && !line.empty()) {
+      // Revisar que la linea no sean solo espacios en blanco
+      
+      std::cout << "Line: " << line << std::endl;
       if (line.find(':') != std::string::npos) {
         // Split the line in two parts: label and instruction
         std::string label = line.substr(0, line.find(':'));
@@ -60,28 +64,28 @@ ProgramMemory::ProgramMemory(std::string ramProgramFileName) {
       std::string keyChar = " ";
       if (instruction.find("=") != std::string::npos) {
         keyChar = "=";
-        std::cout << "Trabajando en la instruccion inmediata " << instruction << std::endl;
         //operand = std::stoi(instruction.substr(instruction.find("=") + 1, instruction.size()));
         operandType = "inmediate";
         //instruction = instruction.substr(0, instruction.find("="));
       } else if (instruction.find("*") != std::string::npos) {
         keyChar = "*";
-        std::cout << "Trabajando en la instruccion indirecta " << instruction << std::endl;
         operandType = "indirect";
       } // Aquí tenemos que trabajar con la instrucción directa o instrucciones de salto.
         instruction = instruction.substr(0, instruction.find(keyChar));
         auxInstruction.erase(0, instruction.size() + 1);
-        std::cout << "Operand string: " << auxInstruction << " de tamaño: " << auxInstruction.size() << std::endl;
+        //std::cout << "Operand string: " << auxInstruction << " de tamaño: " << auxInstruction.size() << std::endl;
         //printLabels();
+        // convertir a minusculas la instruccion
+        std::transform(instruction.begin(), instruction.end(), instruction.begin(), ::tolower);
         if (instruction == "jump" || instruction == "jzero" || instruction == "jgtz") {
-          std::cout << "Es una etiqueta" << std::endl;
           PairLabelLine pairLabelLine(auxInstruction, getLabelLine(auxInstruction));
-          //checkTypeInstruction(instruction, 0, "inmediate", pairLabelLine);
+          checkTypeInstruction(instruction, 0, "inmediate", pairLabelLine);
           continue;
         }
         if (auxInstruction.length() > 0) {
           operand = std::stoi(auxInstruction);
         }
+      checkTypeInstruction(instruction, operand, operandType);
       program_ += instruction + "\n";
       lineCounter++;
     }

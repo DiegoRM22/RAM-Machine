@@ -18,7 +18,9 @@ class JgtzInstruction : public Instruction {
       std::cout << "Jumping to " << label_.getLabel() << " because R0 value is greater than zero" << std::endl;
       programCounter = label_.getLine();
     } else {
-      std::cout << "Not jumping to " << label_.getLabel() << " because R0 value is not greater than zero" << std::endl;}
+      std::cout << "Not jumping to " << label_.getLabel() << " because R0 value is not greater than zero" << std::endl;
+      programCounter++;
+    }
   }
  private:
   PairLabelLine label_;
