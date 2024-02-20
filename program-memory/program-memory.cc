@@ -15,10 +15,16 @@
 #include "../instruction/jgtz-instruction.h"
 #include "../instruction/halt-instruction.h"
 #include "../instruction/write-instruction/write-instruction.h"
+#include "../instruction/adv-instruction/adv-instruction.h"
 
 
 #define STORE = "STORE"
 
+/**
+ * @brief Find the labels in the program.
+ * @param program The program to find the labels.
+ * @return void
+*/
 void ProgramMemory::findLabels(const std::string& program) {
   std::string line;
   std::ifstream ramProgramFile(program);
@@ -26,9 +32,6 @@ void ProgramMemory::findLabels(const std::string& program) {
   while (std::getline(ramProgramFile, line)) {
     line.erase(line.begin(), std::find_if(line.begin(), line.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
     if (line[0] != '#' && !line.empty()) {
-      // Revisar que la linea no sean solo espacios en blanco
-      
-      //std::cout << "Line: " << line << std::endl;
       if (line.find(':') != std::string::npos) {
         // Split the line in two parts: label and instruction
         std::string label = line.substr(0, line.find(':'));
@@ -40,6 +43,10 @@ void ProgramMemory::findLabels(const std::string& program) {
   }
 }
 
+/**
+ * @brief Construct a new Program Memory object
+ * @param ramProgramFileName The name of the file with the program.
+*/
 ProgramMemory::ProgramMemory(std::string ramProgramFileName) {
   std::string line;
   std::ifstream ramProgramFile(ramProgramFileName);
@@ -50,10 +57,10 @@ ProgramMemory::ProgramMemory(std::string ramProgramFileName) {
     int operand = 0;
     std::string operandType = "direct";
     // Check if the line is a comment and if is not empty
-    std::cout << "Line: " << line << std::endl;
+    //std::cout << "Line: " << line << std::endl;
     if (line[0] != '#' && !line.empty()) {
       // Check if the line is a label -> there's a : in the line
-      std::cout << " entra aqui" << std::endl;
+      //std::cout << " entra aqui" << std::endl;
       std::string instruction;
       if (line.find(':') != std::string::npos) {
         instruction = line.substr(line.find(':') + 1, line.size());
@@ -83,9 +90,6 @@ ProgramMemory::ProgramMemory(std::string ramProgramFileName) {
           auxInstruction = auxInstruction.substr(0, auxInstruction.find("["));
           std::cout << "Position: " << position << std::endl;
         }
-        //std::cout << "Operand string: " << auxInstruction << " de tamaño: " << auxInstruction.size() << std::endl;
-        //printLabels();
-        // convertir a minusculas la instruccion
         std::transform(instruction.begin(), instruction.end(), instruction.begin(), ::tolower);
         if (instruction == "jump" || instruction == "jzero" || instruction == "jgtz") {
           PairLabelLine pairLabelLine(auxInstruction, getLabelLine(auxInstruction));
@@ -102,6 +106,11 @@ ProgramMemory::ProgramMemory(std::string ramProgramFileName) {
   }
 }
 
+/**
+ * @brief Get the line of a label.
+ * @param label The label to get the line.
+ * @return The line of the label.
+*/
 int ProgramMemory::getLabelLine(const std::string &label) {
   for (int i = 0; i < labels_.size(); i++) {
     if (labels_[i].getLabel() == label) {
@@ -111,6 +120,10 @@ int ProgramMemory::getLabelLine(const std::string &label) {
   return -1;
 }
 
+/**
+ * @brief Print the instructions of the program memory.
+ * @return void
+*/
 void ProgramMemory::printInstructions() const{
   std::cout << "Instructions: " << std::endl;
   for (int i = 0; i < instructions_.size(); i++) {
@@ -118,6 +131,10 @@ void ProgramMemory::printInstructions() const{
   }
 }
 
+/**
+ * @brief Print the labels of the program memory.
+ * @return void
+*/
 void ProgramMemory::printLabels() const {
   std::cout << "Labels: " << std::endl;
   for (int i = 0; i < labels_.size(); i++) {
@@ -125,10 +142,19 @@ void ProgramMemory::printLabels() const {
   }
 }
 
+/**
+ * @brief Check the type of the instruction and create the corresponding object.
+ * @param instruction The instruction to check.
+ * @param instructionOPerand The operand of the instruction.
+ * @param operandType The type of the operand.
+ * @param labelLine The label and line of the instruction.
+ * @param position The position of the operand.
+ * @return void
+*/
 void ProgramMemory::checkTypeInstruction(const std::string& instruction, const int instructionOPerand, const std::string& operandType,
                                          const PairLabelLine& labelLine, int position) {
   // convertimos la instruccion a minusculas
-  std::cout << "Checking type of instruction: " << instruction << std::endl;
+  //std::cout << "Checking type of instruction: " << instruction << std::endl;
   // Obtener el operando de la instruccion
   if (instruction.find("store") != std::string::npos) {
     instructions.push_back(std::make_shared<StoreInstruction>(StoreInstruction(instructionOPerand, operandType, position)));
@@ -156,11 +182,18 @@ void ProgramMemory::checkTypeInstruction(const std::string& instruction, const i
     instructions.push_back(std::make_shared<WriteInstruction>(WriteInstruction(instructionOPerand, operandType, position)));
   } else if (instruction.find("jgtz") != std::string::npos) {
     instructions.push_back(std::make_shared<JgtzInstruction>(JgtzInstruction(labelLine)));
+  } else if (instruction.find("adv") != std::string::npos) {
+    instructions.push_back(std::make_shared<AdvInstruction>(AdvInstruction(instructionOPerand, operandType, position)));
   } else {
     std::cout << "Error: instruction not found" << std::endl;
   }
 }
 
+/**
+ * @brief Access an instruction in the program memory.
+ * @param programCounter The program counter of the machine.
+ * @return The instruction in the program memory at the given program counter.
+*/
 std::shared_ptr<Instruction> ProgramMemory::accessInstruction(const int programCounter) {
   if (programCounter < instructions.size()) {
     return instructions[programCounter];
@@ -170,12 +203,20 @@ std::shared_ptr<Instruction> ProgramMemory::accessInstruction(const int programC
   }
 }
 
+/**
+ * @brief Executes the instructions in the program memory.
+ * @return void
+*/
 void ProgramMemory::executeInstructions() {
   for (int i = 0; i < instructions.size(); i++) {
     instructions[i]->execute();
   }
 }
 
+/**
+ * @brief Returns the program memory.
+ * @return The program memory.
+*/
 bool ProgramMemory::isALabel(const std::string& label) const {
   for (int i = 0; i < labels_.size(); i++) {
     if (labels_[i].getLabel() == label) {

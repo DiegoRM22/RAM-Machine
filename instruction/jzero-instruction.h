@@ -6,7 +6,9 @@
 #include "instruction.h"
 #include "../data-memory/data-memory.h"
 
-// Class for instruction jzero
+/**
+ * @brief The JzeroInstruction class represents the JZERO instruction of the machine.
+*/
 class JzeroInstruction : public Instruction {
  public:
   JzeroInstruction() = default;

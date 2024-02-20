@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-
+// Clase que representa la unidad de entrada de la máquina de Turing.
 class InputUnit {
  public:
   InputUnit() = default;

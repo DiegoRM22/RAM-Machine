@@ -16,11 +16,10 @@ class DataMemory {
       dataMemory_.resize(address + 1, std::vector<int>(10, 0));
       //std::cout << "Resizing data memory to " << address + 1 << std::endl;
     }
-    std::cout << "Setting register " << address << " [" << position << " to " << value << std::endl;
     dataMemory_[address][position] = value;
-    std::cout << "Register " << address << " [" << position << "] set to " << dataMemory_[address][position] << std::endl;
   }
   int getRegister(int address, int position = 0) { return dataMemory_[address][position]; }
+  int getVectorSize(int address) { return dataMemory_[address].size(); }
 
  private:
   std::vector<std::vector<int>> dataMemory_;

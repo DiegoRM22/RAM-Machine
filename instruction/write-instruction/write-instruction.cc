@@ -2,6 +2,14 @@
 
 #include "write-instruction.h"
 
+/**
+ * @brief Executes the write instruction.
+ * @param dataMemory The data memory of the machine.
+ * @param programCounter The program counter of the machine.
+ * @param outputUnit The output unit of the machine.
+ * @param inputUnit The input unit of the machine.
+ * @return void
+*/
 void WriteInstruction::execute(DataMemory& dataMemory, int& programCounter, OutputUnit& outputUnit, InputUnit& inputUnit) {
   //std::cout << "Writing " << operand_ << " to " << operandType_ << std::endl;
   // Check the type of the operand.

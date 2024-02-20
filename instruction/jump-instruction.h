@@ -6,7 +6,9 @@
 #include "instruction.h"
 #include "../data-memory/data-memory.h"
 
-// Class for instruction jump
+/**
+ * @brief The JumpInstruction class represents the JUMP instruction of the machine.
+*/
 class JumpInstruction : public Instruction {
  public:
   JumpInstruction() = default;

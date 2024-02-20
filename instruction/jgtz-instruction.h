@@ -7,7 +7,9 @@
 #include "../data-memory/data-memory.h"
 #include "../pair-label-line.h"
 
-// Class for instruction jgtz
+/**
+ * @brief The JgtzInstruction class represents the JGTZ instruction of the machine.
+*/
 class JgtzInstruction : public Instruction {
  public:
   JgtzInstruction() = default;

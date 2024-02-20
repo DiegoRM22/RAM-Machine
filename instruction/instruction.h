@@ -12,7 +12,9 @@
 #include "../input-unit/input-unit.h"
 #include "../pair-label-line.h"
 
-
+/**
+ * @brief The Instruction class is an abstract class that represents the instructions of the machine.
+*/
 class Instruction {
  public:
   virtual void execute() = 0;

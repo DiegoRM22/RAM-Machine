@@ -6,6 +6,10 @@
 #include <vector>
 #include <fstream>
 
+/**
+ * @brief The OutputUnit class is a class that represents the output unit of the Turing machine.
+ * It is in charge of writing the output memory to a file.
+*/
 class OutputUnit {
  public:
   OutputUnit() = default;

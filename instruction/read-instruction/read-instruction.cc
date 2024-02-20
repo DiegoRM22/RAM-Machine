@@ -2,6 +2,14 @@
 
 #include "read-instruction.h"
 
+/**
+ * @brief Executes the read instruction.
+ * @param dataMemory The data memory of the machine.
+ * @param programCounter The program counter of the machine.
+ * @param outputUnit The output unit of the machine.
+ * @param inputUnit The input unit of the machine.
+ * @return void
+*/
 void ReadInstruction::execute(DataMemory& dataMemory, int& programCounter, OutputUnit& outputUnit, InputUnit& inputUnit) {
   //std::cout << "Reading " << operand_ << std::endl;
   // Check the type of the operand.
@@ -14,7 +22,6 @@ void ReadInstruction::execute(DataMemory& dataMemory, int& programCounter, Outpu
     exit(1);
   }
   else if (operandType_ == "direct") {
-    std::cout << "Reading from input tape, writing into " << operand_ << " in the position: " << position_ << std::endl;
     dataMemory.setRegister(operand_, inputUnit.getValue(), position_);
   } else if (operandType_ == "indirect") {
     int address = dataMemory.getRegister(operand_);

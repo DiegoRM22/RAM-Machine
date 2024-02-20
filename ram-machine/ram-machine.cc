@@ -1,7 +1,13 @@
 
 #include "ram-machine.h"
 
-// Constructor
+/**
+ * @brief Constructor of the RAMMachine class.
+ * @param ramProgramFileName The name of the file that contains the RAM program.
+ * @param inputFileName The name of the file that contains the input for the RAM program.
+ * @param outputFileName The name of the file that will contain the output of the RAM program.
+ * @return void
+*/
 RAMMachine::RAMMachine(std::string ramProgramFileName, std::string inputFileName, std::string outputFileName) {
 
   ProgramMemory program(ramProgramFileName);
@@ -15,7 +21,12 @@ RAMMachine::RAMMachine(std::string ramProgramFileName, std::string inputFileName
   //arithmeticUnit_.executeInstructions(programMemory_, dataMemory_);
 }
 
-// Load the program from a file
+
+/**
+ * @brief Destructor of the RAMMachine class.
+ * @return
+ * @return void
+*/
 void RAMMachine::runProgram(const std::string &filename, const int debuggOption) {
   while (arithmeticUnit_.programCounter_ < programMemory_.getNumberOfInstructions()) {
     std::shared_ptr<Instruction> instruction = programMemory_.accessInstruction(arithmeticUnit_.programCounter_);
@@ -31,14 +42,10 @@ void RAMMachine::runProgram(const std::string &filename, const int debuggOption)
       std::cout << "Cinta de salida: " << std::endl;
       outputUnit_.printMemory();
     }
-    //std::cout << "Program counter: " << arithmeticUnit_.programCounter_ << std::endl;
-    //outputUnit_.printMemory();
-    //std::cout << "-------------------" << std::endl;
     arithmeticUnit_.numberOfInstructions_++;
     if (debuggOption == 1 || debuggOption == 2) {
       std::cout << "Número de instrucciones ejecutadas: " << arithmeticUnit_.numberOfInstructions_ << std::endl;
     }
-    
   }
   
   outputUnit_.writeToFile();

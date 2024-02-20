@@ -33,4 +33,6 @@ build/./program-memory/program-memory.o: program-memory/program-memory.cc \
  program-memory/../instruction/halt-instruction.h \
  program-memory/../instruction/write-instruction/write-instruction.h \
  program-memory/../instruction/write-instruction/../instruction.h \
- program-memory/../instruction/write-instruction/../../data-memory/data-memory.h
+ program-memory/../instruction/write-instruction/../../data-memory/data-memory.h \
+ program-memory/../instruction/adv-instruction/adv-instruction.h \
+ program-memory/../instruction/adv-instruction/../instruction.h

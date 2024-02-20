@@ -4,7 +4,7 @@ SRC_DIR = .
 BUILD_DIR = build
 TARGET = ram
 
-SRCS = $(wildcard $(SRC_DIR)/*.cc) $(wildcard $(SRC_DIR)/ram-machine/*.cc) $(wildcard $(SRC_DIR)/arithmetic-unit/*.cc) $(wildcard $(SRC_DIR)/data-memory/*.cc) $(wildcard $(SRC_DIR)/input-unit/*.cc) $(wildcard $(SRC_DIR)/output-unit/*.cc) $(wildcard $(SRC_DIR)/program-memory/*.cc) $(wildcard $(SRC_DIR)/instruction/add-instruction/*.cc) $(wildcard $(SRC_DIR)/instruction/div-instruction/*.cc) $(wildcard $(SRC_DIR)/instruction/load-instruction/*.cc) $(wildcard $(SRC_DIR)/instruction/mul-instruction/*.cc) $(wildcard $(SRC_DIR)/instruction/read-instruction/*.cc) $(wildcard $(SRC_DIR)/instruction/store-instruction/*.cc) $(wildcard $(SRC_DIR)/instruction/sub-instruction/*.cc) $(wildcard $(SRC_DIR)/instruction/write-instruction/*.cc)
+SRCS = $(wildcard $(SRC_DIR)/*.cc) $(wildcard $(SRC_DIR)/ram-machine/*.cc) $(wildcard $(SRC_DIR)/arithmetic-unit/*.cc) $(wildcard $(SRC_DIR)/data-memory/*.cc) $(wildcard $(SRC_DIR)/input-unit/*.cc) $(wildcard $(SRC_DIR)/output-unit/*.cc) $(wildcard $(SRC_DIR)/program-memory/*.cc) $(wildcard $(SRC_DIR)/instruction/add-instruction/*.cc) $(wildcard $(SRC_DIR)/instruction/div-instruction/*.cc) $(wildcard $(SRC_DIR)/instruction/load-instruction/*.cc) $(wildcard $(SRC_DIR)/instruction/mul-instruction/*.cc) $(wildcard $(SRC_DIR)/instruction/read-instruction/*.cc) $(wildcard $(SRC_DIR)/instruction/store-instruction/*.cc) $(wildcard $(SRC_DIR)/instruction/sub-instruction/*.cc) $(wildcard $(SRC_DIR)/instruction/write-instruction/*.cc) $(wildcard $(SRC_DIR)/instruction/adv-instruction/*.cc)
 
 OBJS = $(SRCS:%.cc=$(BUILD_DIR)/%.o)
 DEPS = $(OBJS:.o=.d)
