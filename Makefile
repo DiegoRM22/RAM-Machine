@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -std=c++11 -Wall
+CFLAGS = -std=c++11
 SRC_DIR = .
 BUILD_DIR = build
 TARGET = ram
