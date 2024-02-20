@@ -13,7 +13,7 @@ class DataMemory {
   void printRegisters();
   void setRegister(int address, int value, int position = 0) {
     if (address >= dataMemory_.size()) {
-      dataMemory_.resize(address + 1);
+      dataMemory_.resize(address + 1, std::vector<int>(10, 0));
       //std::cout << "Resizing data memory to " << address + 1 << std::endl;
     }
     std::cout << "Setting register " << address << " [" << position << " to " << value << std::endl;

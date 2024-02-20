@@ -1,9 +1,17 @@
 
 
-read 1[2]
-load 1[2]
-store 4[3]
-sub 1[2]
-write 4[3]
-write 1[2]
-halt
+read 1
+load 1
+sub =1
+store 2
+
+load_vector: read 
+
+for: load 2
+     jzero
+     load 1
+     store 4
+    inner_for: load 4
+               sub =1
+
+               
